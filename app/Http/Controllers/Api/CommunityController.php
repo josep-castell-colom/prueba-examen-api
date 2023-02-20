@@ -22,7 +22,15 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required | string',
+            'description' => 'required | string',
+            'rules' => 'required | string',
+        ]);
+
+        $community = Community::factory()->create($validated);
+
+        return CommunityResource::make($community);
     }
 
     /**
@@ -36,16 +44,26 @@ class CommunityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Community $community)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'string',
+            'description' => 'string',
+            'rules' => 'string',
+        ]);
+
+        $community->update($validated);
+
+        return CommunityResource::make($community);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Community $community)
     {
-        //
+        $community->delete();
+
+        return response()->noContent();
     }
 }
