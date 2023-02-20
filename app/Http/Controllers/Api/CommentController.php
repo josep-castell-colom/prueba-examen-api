@@ -22,7 +22,15 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required | string',
+            'description' => 'required | string',
+            'rules' => 'required | string',
+        ]);
+
+        $comment = Comment::create($validated);
+
+        return CommentResource::make($comment);
     }
 
     /**
@@ -36,16 +44,26 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'string',
+            'description' => 'string',
+            'rules' => 'string',
+        ]);
+
+        $comment->update($validated);
+
+        return CommentResource::make($comment);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return response()->noContent();
     }
 }
