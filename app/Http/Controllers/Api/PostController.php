@@ -22,7 +22,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required | string',
+            'body' => 'required | string',
+        ]);
+
+        $post = Post::factory()->create($validated);
+
+        return PostResource::make($post);
     }
 
     /**
@@ -36,16 +43,25 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'string',
+            'body' => 'string',
+        ]);
+
+        $post->update($validated);
+
+        return PostResource::make($post);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return response()->noContent();
     }
 }
