@@ -23,9 +23,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required | string',
-            'description' => 'required | string',
-            'rules' => 'required | string',
+            'body' => 'required | string',
         ]);
 
         $comment = Comment::create($validated);
@@ -47,9 +45,7 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $validated = $request->validate([
-            'name' => 'string',
-            'description' => 'string',
-            'rules' => 'string',
+            'body' => 'string',
         ]);
 
         $comment->update($validated);
