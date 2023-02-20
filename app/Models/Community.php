@@ -10,6 +10,12 @@ class Community extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'rules'
+    ];
+
     public function users() {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
