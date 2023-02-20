@@ -81,7 +81,7 @@ return [
         'test' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => 'randion.es',
             'port' => env('DB_PORT', '5432'),
             'database' => 'jcastellcolom_reddit_testing_db',
             'username' => env('DB_USERNAME', 'forge'),
