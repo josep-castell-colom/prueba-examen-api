@@ -187,6 +187,12 @@ class CommunityTest extends TestCase
      * @test
      */
     public function can_return_json_api_error_object_when_not_found() {
-
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $response = $this->getJson('/api/communities/12345');
+        $response->assertNotFound();
+        $response->assertJson([
+            'error' => 'not found',
+        ]);
     }
 }
